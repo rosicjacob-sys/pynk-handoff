@@ -1,0 +1,193 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>PYNK — Developer Handoff</title>
+<style>
+:root{--accent:#ff2e88;--ink:#16181a;--mut:#666e73;--line:#e4e7e9;--bg:#fbfbfc;--panel:#fff;--code:#f4f6f7}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+.bar{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.bar .in{max-width:900px;margin:0 auto;padding:.85rem 1.5rem;display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+.bar .nm{font-weight:750;letter-spacing:-.01em;margin-right:auto;display:flex;align-items:center;gap:.55rem}
+.bar .nm i{width:10px;height:10px;border-radius:50%;background:var(--accent);display:inline-block}
+.btn{display:inline-block;padding:.5rem 1rem;border-radius:8px;font-size:.86rem;font-weight:650;text-decoration:none;border:1px solid var(--line);color:var(--ink);background:var(--panel);white-space:nowrap}
+.btn:hover{border-color:var(--accent)}
+.btn--live{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn--live.dark{color:#0a0e0d}
+.wrap{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
+h1{font-size:2.1rem;letter-spacing:-.02em;margin:.2rem 0 .6rem}
+h2{font-size:1.35rem;margin:2.6rem 0 .8rem;padding-top:1.4rem;border-top:1px solid var(--line);letter-spacing:-.01em}
+h3{font-size:1.05rem;margin:1.6rem 0 .5rem}
+p,li{color:#31373b}
+a{color:var(--accent)}
+code{background:var(--code);padding:.15em .4em;border-radius:5px;font-size:.88em;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+pre{background:var(--code);padding:1rem 1.1rem;border-radius:10px;overflow-x:auto;border:1px solid var(--line)}
+pre code{background:none;padding:0;font-size:.83rem;line-height:1.6}
+blockquote{margin:1.2rem 0;padding:.9rem 1.1rem;background:#fff8e6;border-left:3px solid #e8b53d;border-radius:0 8px 8px 0}
+blockquote p{margin:0}
+table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.92rem}
+th,td{text-align:left;padding:.6rem .7rem;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.76rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mut)}
+hr{border:0;border-top:1px solid var(--line);margin:2.4rem 0}
+ol,ul{padding-left:1.3rem}
+li{margin:.3rem 0}
+@media print{.bar{display:none}.wrap{max-width:none;padding:0}body{background:#fff}a{color:var(--ink)}}
+</style></head><body>
+<div class="bar"><div class="in">
+  <span class="nm"><i></i>PYNK — developer handoff</span>
+  <a class="btn btn--live" href="../">View live site →</a>
+  <a class="btn" href="../dl/pynk.zip" download>Download source .zip</a>
+  <a class="btn" href="../dl/HANDOFF.pdf" download>PDF</a>
+</div></div>
+<div class="wrap"><h1>PYNK — Developer Handoff</h1>
+<p style="margin:-.2rem 0 1.2rem;font-size:.82rem;color:#6b7378">
+     Build <code>0094bd6</code> · updated 2026-07-20 21:11 UTC · this page, the live site and the
+     <a href="../dl/pynk.zip">source zip</a> are all rebuilt together on every change.</p>
+<p>Take the pink one — an animated 3D supplement store built around one pink capsule that transforms across the entire page.</p>
+<ul>
+<li><strong>Live site:</strong> <a href="https://rosicjacob-sys.github.io/pynk-handoff/">https://rosicjacob-sys.github.io/pynk-handoff/</a></li>
+<li><strong>This guide:</strong> <a href="https://rosicjacob-sys.github.io/pynk-handoff/dev/">https://rosicjacob-sys.github.io/pynk-handoff/dev/</a></li>
+<li><strong>Source + build zip:</strong> <a href="https://rosicjacob-sys.github.io/pynk-handoff/dl/pynk.zip">https://rosicjacob-sys.github.io/pynk-handoff/dl/pynk.zip</a></li>
+</ul>
+<blockquote>
+<p>These links are hosted and always available — they do not depend on anyone&#39;s
+machine being on. The zip is rebuilt with the site on every publish, so
+always download it fresh rather than keeping a local copy.</p>
+</blockquote>
+<hr>
+<h2>What this is</h2>
+<p>A production-built <strong>React 18 + Vite + TypeScript</strong> single-page landing page using
+GSAP + ScrollTrigger, three.js / react-three-fiber (WebGL) and Lenis smooth scroll,
+with a working demo cart and a <strong>swappable checkout seam</strong>.</p>
+<blockquote>
+<p>⚠️ <strong>Read first:</strong> this is a React SPA, <strong>not</strong> a Shopify Liquid theme. You cannot drop
+the folder into a theme as-is. The three real integration paths are below.</p>
+</blockquote>
+<p><strong>Product:</strong> PYNK Daily — a daily wellness capsule (dietary supplement). Variants: 1 bottle / 3-pack / subscribe &amp; save.</p>
+<hr>
+<h2>What&#39;s in the zip</h2>
+<pre><code>pinkpage2/
+  src/            all source (components, three/ WebGL, styles, data)
+  public/         self-hosted fonts + any generated imagery
+  dist/           PRODUCTION BUILD — preview or deploy immediately
+  index.html
+  package.json + package-lock.json
+  scripts/serve-dist.cjs    zero-dependency static preview server
+  HANDOFF.md / HANDOFF.pdf  this guide
+</code></pre>
+<p>Not included (regenerate locally): <code>node_modules/</code>, <code>.git/</code>.</p>
+<h2>Run it locally</h2>
+<pre><code class="language-bash">cd pinkpage2
+npm install          # Node 18+
+
+npm run dev          # hot-reloading dev server
+# —or— preview the exact production build (no install needed):
+node scripts/serve-dist.cjs
+</code></pre>
+<hr>
+<h2>Getting this onto Shopify — three real paths</h2>
+<h3>Path A — Reference + reimplement in the theme ★ recommended for production</h3>
+<p>Treat this page as the pixel-and-motion spec and rebuild the sections as <strong>Liquid
+sections/blocks</strong>. Reuse the same libraries (GSAP, three.js, Lenis) as theme assets and
+wire commerce to Shopify&#39;s native <strong>AJAX Cart</strong> (<code>/cart/add.js</code>, <code>/cart.js</code>). You keep
+theme-native cart, SEO and Theme-Editor control.</p>
+<ul>
+<li><code>src/styles/global.css</code> — design tokens + layout. <strong>Copy the <code>:root</code> variables first.</strong></li>
+<li><code>src/components/*.tsx</code> — section structure and copy.</li>
+<li><code>src/three/*</code> — the WebGL; framework-light and portable almost verbatim.</li>
+</ul>
+<h3>Path B — Embed the built SPA ★ fastest</h3>
+<p>Host <code>dist/</code> (theme assets or external CDN) and load it in a full-width custom section or
+a dedicated template. Point <code>checkout()</code> at a Shopify <strong>cart permalink</strong>
+(<code>/cart/{variantId}:{qty}</code>) or the Storefront API. Trade-off: heavier bundle, the SPA cart
+is separate from the theme cart, less Theme-Editor control.</p>
+<h3>Path C — Headless (Hydrogen / Storefront API)</h3>
+<p>If the store is headless, these React components port <strong>directly</strong>.
+<code>checkout()</code> → Storefront API <code>cartCreate</code> / <code>cart.checkoutUrl</code>.</p>
+<hr>
+<h2>The four Shopify seams (already isolated)</h2>
+<table>
+<thead>
+<tr>
+<th>Seam</th>
+<th>File</th>
+<th>What to do</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Checkout</strong></td>
+<td><code>src/lib/checkout.ts</code></td>
+<td><code>setCheckoutProvider(fn)</code> — implement ONE adapter. Nothing else changes.</td>
+</tr>
+<tr>
+<td><strong>Cart state</strong></td>
+<td><code>src/store/cart.ts</code></td>
+<td>Zustand + localStorage demo cart. Mirror to Shopify AJAX Cart, or replace calls with <code>/cart/add.js</code>.</td>
+</tr>
+<tr>
+<td><strong>Products / prices / copy</strong></td>
+<td><code>src/data/product.ts</code></td>
+<td>Every variant, price and string in ONE file. Map each <code>variantId</code> to a real Shopify variant ID.</td>
+</tr>
+<tr>
+<td><strong>Analytics</strong></td>
+<td><code>src/lib/analytics.ts</code></td>
+<td><code>view_item</code>, <code>add_to_cart</code>, <code>begin_checkout</code> already fire to <code>window.dataLayer</code>. Point at GA4 / Shopify analytics.</td>
+</tr>
+</tbody></table>
+<p>Example checkout adapter (Path B — cart permalink):</p>
+<pre><code class="language-ts">import { setCheckoutProvider } from &#39;./lib/checkout&#39;
+
+setCheckoutProvider(async (items) =&gt; {
+  const q = items.map(i =&gt; `${SHOPIFY_VARIANT_ID[i.variantId]}:${i.qty}`).join(&#39;,&#39;)
+  window.location.href = `https://YOUR-STORE.myshopify.com/cart/${q}`
+  return { ok: true }
+})
+</code></pre>
+<hr>
+<h2>This theme specifically</h2>
+<p><strong>Palette</strong> — <code>--porcelain #FDF6FA</code> canvas · <code>--pink-royal #FF2E88</code> accent · <code>--pink-deep #C4126B</code> · <code>--plum-ink #1A0A14</code> for the rare dark sections.</p>
+<p><strong>Type</strong> — Clash Display (display) + Satoshi (body) — self-hosted variable woff2 in <code>public/fonts/</code>.</p>
+<p><strong>Sections, in order</strong></p>
+<ol>
+<li>Loader</li>
+<li>Hero</li>
+<li>Trust marquee</li>
+<li>The Science (dark, pinned)</li>
+<li>How it works</li>
+<li>Benefits grid</li>
+<li>Proof / reviews</li>
+<li>Buy block</li>
+<li>FAQ + compliance</li>
+<li>Footer</li>
+<li>Sticky buy bar</li>
+<li>Cart drawer</li>
+</ol>
+<p><strong>Key animation work to preserve</strong></p>
+<ul>
+<li>One persistent 3D capsule on a single fixed WebGL canvas, choreographed across every section</li>
+<li>Signature beat: the capsule splits open and dissolves into GPU-instanced granules, which reassemble into labeled ingredient nodes</li>
+<li>Masked character reveals on headlines (split-type, 0.032 stagger, power4.out)</li>
+<li>Magnetic CTAs, custom cursor, fly-to-cart arc on add</li>
+</ul>
+<hr>
+<h2>What&#39;s hardened — please keep</h2>
+<ul>
+<li><strong><code>prefers-reduced-motion</code></strong> fully disables the spectacle; the page stays calm and buyable.</li>
+<li><strong>WebGL never blanks</strong> — capability probe + error boundary → static fallback. No GPU still gives a complete page.</li>
+<li><strong>~3.5 s reveal failsafes</strong> — anything that animates in force-reveals; content cannot get stuck invisible.</li>
+<li><strong>One WebGL context</strong>, DPR-clamped <code>[1,2]</code>, paused offscreen, adaptive quality under load.</li>
+<li><strong>Cart drawer is a real modal</strong> — focus trap, background <code>inert</code>, <code>Esc</code> to close.</li>
+<li><strong>No layout shift</strong> — canvas and images reserve their space.</li>
+</ul>
+<h2>Stack</h2>
+<p>React 18 · Vite (rolldown) · TypeScript · three ~0.169 · @react-three/fiber 8 · drei 9 ·
+gsap 3 (free plugins only — no Club plugins) · lenis 1 · split-type · zustand.
+Evergreen browsers; WebGL2 preferred, WebGL1 / no-GL gracefully degraded.
+Fonts are self-hosted woff2 (no runtime Google Fonts request).</p>
+<hr>
+<h2>Compliance — read before launch</h2>
+<p>Dietary supplement. Structure/function claims only (&quot;supports calm focus&quot;, &quot;supports clean energy&quot;) with the standard FDA disclaimer, a Supplement Facts panel, suggested use and a consult-your-physician line. Do not substitute disease/treatment claims.</p>
+<hr>
+<p><em>The four files in the seams table are the entire commerce surface. Start there.</em></p>
+</div>
+</body></html>
